@@ -22,10 +22,14 @@ function wifi_connect() {
   eval $COMMAND
 }
 
+function wifi_disconnect() {
+  eval "nmcli c down id $(wifi_current)"
+}
+
 alias wifi-list="nmcli device wifi list"
 alias wifi-connect=wifi_connect
 alias wifi-current=wifi_current
-alias wifi-disconnect="nmcli c down id `wifi_current`"
+alias wifi-disconnect=wifi_disconnect
 
 # System
 function copyToClipboard() {
