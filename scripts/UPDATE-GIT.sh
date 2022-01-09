@@ -67,5 +67,10 @@ ROFI=$CONFIGS/rofi
 mkdir $ROFI
 cp $BASE_CONFIG/rofi/config.rasi $ROFI
 
+# SSH
+SSH=$CONFIG_FOLDER/.ssh
+mkdir $SSH
+cp $BASE/.ssh/config $SSH
+
 # Removing saved configs
 rm -rfd $CONFIG_SAVE_FOLDER
