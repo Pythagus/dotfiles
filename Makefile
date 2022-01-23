@@ -3,3 +3,6 @@ update-git:
 
 update-revert:
 	@./scripts/UPDATE-REVERT.sh
+
+install:
+	@./scripts/INSTALL.sh
