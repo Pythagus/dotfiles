@@ -26,7 +26,7 @@ sudo apt update
 sudo apt upgrade
 
 # Install the new packages.
-sudo apt install i3 rofi kitty compton git vim feh xss-lock
+sudo apt install i3status rofi kitty compton git vim feh xss-lock
 
 # Install polybar dependencies.
 sudo apt install libjsoncpp-dev build-essential cmake cmake-data pkg-config python3-sphinx python3-packaging libuv1-dev libcairo2-dev libxcb1-dev libxcb-util0-dev libxcb-randr0-dev libxcb-composite0-dev python3-xcbgen xcb-proto libxcb-image0-dev libxcb-ewmh-dev libxcb-icccm4-dev
@@ -38,6 +38,21 @@ mkdir build
 cd build
 cmake ..
 make -j$(nproc)
+sudo make install
+
+# Install i3 dependencies.
+sudo apt install libxcb-shape0-dev
+
+# Install i3 with i3gaps
+git clone https://github.com/resloved/i3.git $BUILD/i3
+cd $BUILD/i3
+git checkout shape
+git pull
+autoreconf --force --install
+mkdir build
+cd build
+../configure --prefix=/usr --sysconfdir=/etc --disable-sanitizers
+make
 sudo make install
 
 # Creating the old configs folder.
