@@ -61,6 +61,7 @@ colorscheme jellybeans
 let g:lightline = { 'colorscheme' : 'jellybeans' }
 
 " Commands.
+map <C-m> :PreviewMarkdown right<CR>
 command MD execute ":PreviewMarkdown right"
 
 " NERDTree configuration
