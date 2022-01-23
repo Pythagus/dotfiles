@@ -41,7 +41,7 @@ make -j$(nproc)
 sudo make install
 
 # Install i3 dependencies.
-sudo apt install libxcb-shape0-dev
+sudo apt install libxcb-shape0-dev autoconf libxcb-xrm-dev libxcb1-dev libxcb-keysyms1-dev libpango1.0-dev libxcb-util0-dev libxcb-icccm4-dev libyajl-dev libstartup-notification0-dev libxcb-randr0-dev libev-dev libxcb-cursor-dev libxcb-xinerama0-dev libxcb-xkb-dev libxkbcommon-dev libxkbcommon-x11-dev autoconf xutils-dev libtool automake
 
 # Install i3 with i3gaps
 git clone https://github.com/resloved/i3.git $BUILD/i3
