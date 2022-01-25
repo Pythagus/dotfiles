@@ -137,3 +137,8 @@ systemctl restart apache2
 
 echo -e "\033[0;32mLAMP installed!\033[0m\n"
 
+#############################
+# Installing other binaries #
+#############################
+source $LAMP/composer.sh
+
