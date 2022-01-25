@@ -7,5 +7,5 @@ update-revert:
 install-configs:
 	@./scripts/INSTALL.sh
 
-install-lamp:
+lamp:
 	sudo ./lamp/INSTALL.sh
