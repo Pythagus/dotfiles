@@ -4,5 +4,8 @@ update-git:
 update-revert:
 	@./scripts/UPDATE-REVERT.sh
 
-install:
+install-configs:
 	@./scripts/INSTALL.sh
+
+install-lamp:
+	sudo ./lamp/INSTALL.sh
