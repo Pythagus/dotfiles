@@ -16,9 +16,8 @@ CONFIG_FILES = [
     '.bash_aliases',
     '.vimrc',
     '.vim/plugins.vim',
-    '.config/i3/config',
-    '.config/kitty/kitty.conf',
-    '.config/kitty/theme.conf',
+    '.config/i3',
+    '.config/kitty',
     '.config/compton/config',
     '.config/polybar/color',
     '.config/polybar/config',
@@ -35,6 +34,10 @@ BACKUP_FOLDER = '.backup'
 def warning(message):
     print(colorama.Fore.YELLOW + "[WARNING] " + message + colorama.Fore.RESET)
 
+
+# Print an info message.
+def info(message):
+    print(colorama.Fore.CYAN + "[INFO] " + message + colorama.Fore.RESET)
 
 # Empty the given folder.
 def emptyDir(directory):
@@ -62,7 +65,7 @@ def createFolderFromPath(path):
                 os.mkdir(current_path)
 
 
-def copyConfigFiles(src_folder, dst_folder):
+def copyConfigFiles(src_folder, dst_folder, shouldExists=True):
     emptyDir(dst_folder)
 
     for file_name in CONFIG_FILES:
@@ -78,7 +81,7 @@ def copyConfigFiles(src_folder, dst_folder):
                 shutil.copy2(sys_path, destination)
             else:
                 shutil.copytree(sys_path, destination)
-        else:
+        elif shouldExists:
             warning("File " + file_name + " not found")
 
 
@@ -132,6 +135,18 @@ class Command(object):
         raise NotImplementedError()
 
 
+# Install the LAMP stack and dependencies.
+class CommandInstallLamp(Command):
+    # Initialize the save command.
+    def __init__(self):
+        self.description = "Install the LAMP stack with some dependencies."
+        self.name = "install:lamp"
+
+    # Execute the command.
+    def execute(self, arguments):
+        subprocess.call("./lamp/INSTALL.sh")
+
+
 # Save the system configs into the Git repository.
 class CommandSaveConfig(Command):
     # Initialize the save command.
@@ -151,38 +166,29 @@ class CommandInstallConf(Command):
         self.description = "Install the configurations from this repository."
         self.name = "config:install"
 
-    @staticmethod
-    def _storeConfigs():
-        directory = CURRENT_DIRECTORY + '/' + BACKUP_FOLDER
+    # Execute the command.
+    def execute(self, arguments):
+        backup = CURRENT_DIRECTORY + '/' + BACKUP_FOLDER
 
-        if not os.path.isdir(directory):
-            os.mkdir(directory)
+        # Create the backup folder if It not exists.
+        if not os.path.isdir(backup):
+            os.mkdir(backup)
         else:
-            emptyDir(directory)
+            emptyDir(backup)
 
-        copyConfigFiles(HOME_DIRECTORY, directory)
+        info("Saving current configs into " + BACKUP_FOLDER + " folder...")
+        copyConfigFiles(HOME_DIRECTORY, backup, shouldExists=False)
 
-    # Execute the command.
-    def execute(self, arguments):
-        self._storeConfigs()
-
-
-# Install the LAMP stack and dependencies.
-class CommandInstallLamp(Command):
-    # Initialize the save command.
-    def __init__(self):
-        self.description = "Install the LAMP stack with some dependencies."
-        self.name = "install:lamp"
-
-    # Execute the command.
-    def execute(self, arguments):
-        subprocess.call("./lamp/INSTALL.sh")
+        info("Installing the new configs...")
+        copyConfigFiles(CURRENT_DIRECTORY + '/config', HOME_DIRECTORY)
 
 
 manager = CommandManager()
 manager.add(CommandSaveConfig)
 manager.add(CommandInstallLamp)
 manager.add(CommandInstallConf)
+
+# TODO : add ln from python3 to python and py
 
 if __name__ == '__main__':
     args = sys.argv
