@@ -10,10 +10,10 @@ height = 16
 offset-y = 0
 offset-x = 0
 
-border-top-size = 10
-border-bottom-size = 4
-border-right-size = 10
-border-left-size = 10
+border-top-size = 2
+border-bottom-size = 0
+border-right-size = 2
+border-left-size = 2
 
 dpi = 80
 
@@ -25,7 +25,7 @@ override-redirect = false
 
 ; Fonts
 
-font-0 = Arial:size=13;3
+font-0 = Arial:size=11;3
 font-1 = material\-wifi:style=Regular;3
 font-2 = Material Icons:style=Regular;3
 ; Font for the wifi disabled is lower

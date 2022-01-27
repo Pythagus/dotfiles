@@ -44,8 +44,8 @@ exec_always --no-startup-id compton -cb --config ~/.config/compton/config
 # Adjust the screen brightness.
 # File location : /sys/class/backlight/intel_backlight
 exec_always --no-startup-id "sudo chmod 777 /sys/class/backlight/intel_backlight/brightness"
-bindsym XF86MonBrightnessUp exec "brightnessctl s +10%"
-bindsym XF86MonBrightnessDown exec "brightnessctl s 10%-"
+bindsym XF86MonBrightnessUp exec "light -A 10%"
+bindsym XF86MonBrightnessDown exec "light -U 10"
 
 # Use pactl to adjust volume in PulseAudio.
 #set $refresh_i3status killall -SIGUSR1 i3status

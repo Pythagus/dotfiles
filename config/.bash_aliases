@@ -32,11 +32,7 @@ alias wifi-current=wifi_current
 alias wifi-disconnect=wifi_disconnect
 
 # System
-function copyToClipboard() {
-  return "echo $1 | xclip -sel clipboard"
-}
-alias light="sudo chmod 777 /sys/class/backlight/intel_backlight/brightness"
-alias cpy=copyToClipboard
+#alias light="sudo chmod 777 /sys/class/backlight/intel_backlight/brightness"
 
 # TOR browser
 alias tor="cd ~/tor && ./start-tor-browser.desktop && cd ~"
