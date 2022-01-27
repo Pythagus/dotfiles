@@ -26,10 +26,10 @@ sudo apt update
 sudo apt upgrade
 
 # Install the new packages.
-sudo apt install i3status rofi kitty compton git vim feh xss-lock curl
+sudo apt install i3status rofi kitty compton git vim feh xss-lock curl xclip imagemagick-6.q16
 
 # Install polybar dependencies.
-sudo apt install libjsoncpp-dev build-essential cmake cmake-data pkg-config python3-sphinx python3-packaging libuv1-dev libcairo2-dev libxcb1-dev libxcb-util0-dev libxcb-randr0-dev libxcb-composite0-dev python3-xcbgen xcb-proto libxcb-image0-dev libxcb-ewmh-dev libxcb-icccm4-dev
+sudo apt install libjsoncpp-dev build-essential cmake cmake-data pkg-config python3-sphinx python3-packaging libuv1-dev libcairo2-dev libxcb1-dev libxcb-util0-dev libxcb-randr0-dev libxcb-composite0-dev python3-xcbgen xcb-proto libxcb-image0-dev libxcb-ewmh-dev libxcb-icccm4-dev fonts-material-design-icons-iconfont
 
 # Install polybar
 git clone --recursive https://github.com/polybar/polybar $BUILD/polybar

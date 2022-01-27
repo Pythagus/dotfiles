@@ -19,15 +19,22 @@ font pango:Ubuntu, FontAwesome 8, Mono
 for_window [class=".*"] border pixel 0
 gaps inner 10
 gaps outer 0
+border_radius 10
+
 
 # Rofi
 bindsym $mod+d exec "rofi -modi drun,run -show drun -show-icons"
+
 # i3 lock
 exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
+
 # Network manager
 exec --no-startup-id nm-applet
+
 # Set the wallpaper
 exec_always --no-startup-id "feh -d .config/i3/wallpaper.jpg --bg-fill"
+#exec_always --no-startup-ip "xsetroot -solid red" ##D2997C"
+
 # Polybar
 exec_always --no-startup-id ~/.config/polybar/launch.sh
 
