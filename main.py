@@ -16,8 +16,9 @@ CONFIG_FILES = [
     '.bash_aliases',
     '.vimrc',
     '.vim/plugins.vim',
-    '.config/i3',
-    '.config/kitty',
+    '.config/i3/config',
+    '.config/kitty/kitty.conf',
+    '.config/kitty/theme.conf',
     '.config/compton/config',
     '.config/polybar/color',
     '.config/polybar/config',
@@ -30,14 +31,26 @@ CONFIG_FILES = [
 BACKUP_FOLDER = '.backup'
 
 
+# Base print with colors.
+def print_color(color, message):
+    print(color + message + colorama.Fore.RESET)
+
+
+# Print an error message
+def error(message, code=1):
+    print_color(colorama.Fore.RED, "[ERROR] " + message)
+    exit(code)
+
+
 # Print a warning message.
 def warning(message):
-    print(colorama.Fore.YELLOW + "[WARNING] " + message + colorama.Fore.RESET)
+    print_color(colorama.Fore.YELLOW, "[WARNING] " + message)
 
 
 # Print an info message.
 def info(message):
-    print(colorama.Fore.CYAN + "[INFO] " + message + colorama.Fore.RESET)
+    print_color(colorama.Fore.CYAN, "[INFO] " + message)
+
 
 # Empty the given folder.
 def emptyDir(directory):
@@ -66,21 +79,16 @@ def createFolderFromPath(path):
 
 
 def copyConfigFiles(src_folder, dst_folder, shouldExists=True):
-    emptyDir(dst_folder)
-
     for file_name in CONFIG_FILES:
         sys_path = src_folder + '/' + file_name
 
-        is_file = os.path.isfile(sys_path)
-        is_dir = os.path.isdir(sys_path)
-        if is_file or is_dir:
+        if os.path.isdir(sys_path):
+            error("Config file must not be a folder")
+
+        if os.path.isfile(sys_path):
             destination = dst_folder + '/' + file_name
             createFolderFromPath(destination)
-
-            if is_file:
-                shutil.copy2(sys_path, destination)
-            else:
-                shutil.copytree(sys_path, destination)
+            shutil.copy2(sys_path, destination)
         elif shouldExists:
             warning("File " + file_name + " not found")
 
@@ -104,8 +112,7 @@ class CommandManager(object):
         command = self.findName(name)
 
         if command is None:
-            print("ERROR : command " + name + " not found")
-            exit(1)
+            error("ERROR : command " + name + " not found")
 
         command.execute(arguments)
 
@@ -156,7 +163,10 @@ class CommandSaveConfig(Command):
 
     # Execute the command.
     def execute(self, arguments):
-        copyConfigFiles(HOME_DIRECTORY, CURRENT_DIRECTORY + '/config')
+        config_folder = CURRENT_DIRECTORY + '/config'
+
+        emptyDir(config_folder)
+        copyConfigFiles(HOME_DIRECTORY, config_folder)
 
 
 # Install the configurations from this repository.
