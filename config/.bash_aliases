@@ -45,5 +45,6 @@ alias tor="cd ~/tor && ./start-tor-browser.desktop && cd ~"
 alias vpn="sudo openfortivpn -u dmolina vpn.insa-toulouse.fr:443"
 
 # Git
+# To encrypt a file : gpg --output .gitkey.gpg --symmetric key_file
 alias git-key='gpg --decrypt .gitkey.gpg 2> /dev/null | xsel -b'
 
