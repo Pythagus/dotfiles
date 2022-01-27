@@ -55,43 +55,11 @@ cd build
 make
 sudo make install
 
-# Creating the old configs folder.
-rm -rfd $CONFIG_SAVE_FOLDER
-mkdir $CONFIG_SAVE_FOLDER
-
-conf_install() {
-  # Save the old configs.
-  # || 1 to avoid error if file doesn't exist.
-  if [ -f ~/$1 ] || [ -d ~/$1 ] ; then
-    mv ~/$1 ../$CONFIG_SAVE_FOLDER/$1
-  fi
-
-  # Set my new configs.
-  if [ -f ../config/$1 ] ; then
-    cp ../config/$1 ~/$1
-  elif [ -d ../config/$1 ] ; then
-    if [ ! -d ~/$1 ] ; then
-      mkdir ~/$1
-    fi
-
-    for f in ls ../config/$1
-    do
-      cp -r ../config/$1/$f ~/$1/$f
-    done
-  fi
-}
-
-# Install the configs.
-conf_install .bashrc
-conf_install .bash_aliases
-conf_install .vim
-conf_install .vimrc
-conf_install .ssh
-conf_install .config
-
-
 # Copy the mdr bin file.
 # Copy the mdr bin file.
+if [ ! -d ~/.vim ] ; then
+  mkdir ~/.vim
+fi
 if [ ! -d ~/.vim/bin ] ; then
   mkdir ~/.vim/bin
 fi
