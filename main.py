@@ -78,6 +78,8 @@ def createFolderFromPath(path):
                 os.mkdir(current_path)
 
 
+# Copy the configuration files from the
+# source to the destination.
 def copyConfigFiles(src_folder, dst_folder, shouldExists=True):
     for file_name in CONFIG_FILES:
         sys_path = src_folder + '/' + file_name
@@ -100,6 +102,19 @@ def mustBeRoot():
         error("You need to be root to execute this command")
 
 
+# Install the VS code configs.
+def installVisualStudioConf():
+    vs_ext_file = CURRENT_DIRECTORY + '/visual-studio/extensions.txt'
+    if os.path.isfile(vs_ext_file) :
+        info("Installing Visual Studio Code extensions...")
+        with open(vs_ext_file, 'r') as ext_file:
+            for line in ext_file:
+                extension = line.rstrip("\n")
+
+                if len(extension) > 0:
+                    subprocess.call('code --install-extension ' + extension + " > /dev/null", shell=True)
+
+
 # Command manager to execute commands.
 class CommandManager(object):
     __slots__ = [
@@ -112,7 +127,9 @@ class CommandManager(object):
 
     # Add a new command.
     def add(self, command):
-        self.commands.append(command())
+        instance = command()
+        instance.setManager(self)
+        self.commands.append(instance)
 
     # Execute the command defined by the given name.
     def execute(self, name, arguments):
@@ -140,13 +157,31 @@ class CommandManager(object):
 # Abstract class to describe every command.
 class Command(object):
     __slots__ = [
-        "description", "name"
+        "description", "name", "manager"
     ]
+
+    # Set the manager instance.
+    def setManager(self, manager):
+        self.manager = manager
 
     # Abstract method.
     # Execute the command.
     def execute(self, arguments):
         raise NotImplementedError()
+
+
+# Install Visual Studio command.
+class CommandInstallVisualStudio(Command):
+    # Initialize Visual Studio command.
+    def __init__(self):
+        self.description = "Install Visual Studio"
+        self.name = "install:vscode"
+
+    # Execute the command.
+    def execute(self, arguments):
+        info("Installing Visual Studio Code...")
+        subprocess.call(["sudo", './visual-studio/INSTALL.sh'])
+        installVisualStudioConf()
 
 
 # Install the LAMP stack and dependencies.
@@ -172,8 +207,12 @@ class CommandSaveConfig(Command):
     def execute(self, arguments):
         config_folder = CURRENT_DIRECTORY + '/config'
 
+        # Save general configs.
         emptyDir(config_folder)
         copyConfigFiles(HOME_DIRECTORY, config_folder)
+
+        # Save VisualStudioCode configs.
+        subprocess.call('code --list-extensions > ' + CURRENT_DIRECTORY + '/visual-studio/extensions.txt', shell=True)
 
 
 # Install the configurations from this repository.
@@ -198,6 +237,8 @@ class CommandInstallConf(Command):
 
         info("Installing the new configs...")
         copyConfigFiles(CURRENT_DIRECTORY + '/config', HOME_DIRECTORY)
+
+        installVisualStudioConf()
 
 
 # Create a virtual Apache2 host.
@@ -255,6 +296,7 @@ class CommandApacheCreateHost(Command):
 manager = CommandManager()
 manager.add(CommandSaveConfig)
 manager.add(CommandInstallLamp)
+manager.add(CommandInstallVisualStudio)
 manager.add(CommandInstallConf)
 manager.add(CommandApacheCreateHost)
 
