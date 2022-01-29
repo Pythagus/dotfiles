@@ -93,6 +93,13 @@ def copyConfigFiles(src_folder, dst_folder, shouldExists=True):
             warning("File " + file_name + " not found")
 
 
+# Check whether the user is root,
+# and display an error if not.
+def mustBeRoot():
+    if os.geteuid() != 0:
+        error("You need to be root to execute this command")
+
+
 # Command manager to execute commands.
 class CommandManager(object):
     __slots__ = [
@@ -171,7 +178,7 @@ class CommandSaveConfig(Command):
 
 # Install the configurations from this repository.
 class CommandInstallConf(Command):
-    # Initialize the save command.
+    # Initialize the install command.
     def __init__(self):
         self.description = "Install the configurations from this repository."
         self.name = "config:install"
@@ -193,10 +200,64 @@ class CommandInstallConf(Command):
         copyConfigFiles(CURRENT_DIRECTORY + '/config', HOME_DIRECTORY)
 
 
+# Create a virtual Apache2 host.
+class CommandApacheCreateHost(Command):
+    # Initialize the creating host command/
+    def __init__(self):
+        self.description = "Create an apache2 virtual host"
+        self.name = "apache:host"
+
+    # Execute the command.
+    def execute(self, arguments):
+        mustBeRoot()
+
+        if len(arguments) != 2:
+            error(self.name + " wants 2 arguments, " + str(len(arguments)) + " given")
+
+        # Check name.
+        name = str(arguments[0]).lower()
+        if any(not c.isalpha() for c in name):
+            error("Apache2 host should only contain letters (" + name + " given)")
+
+        # Check code location.
+        code_location = str(arguments[1])
+        if code_location[0] == '/':
+            code_location = code_location[1:]
+
+        # Copy the default config file.
+        path = './lamp/'
+        conf_name = name + '.conf'
+        conf_path = path + conf_name
+        shutil.copy2(path + '000-default.conf', conf_path)
+
+        # Replace items in file.
+        with open(conf_path, 'r') as f:
+            conf_text = f.read()
+            conf_text = conf_text.replace('SERVER_NAME', name + '.host')
+            conf_text = conf_text.replace('CODE_LOCATION', code_location)
+
+        # Put the changed content into the file.
+        with open(conf_path, "w") as f:
+            f.write(conf_text)
+        
+        # Append the host at the beginning of
+        # the /etc/hosts file.
+        with open('/etc/hosts', 'r+') as f:
+            content = f.read()
+            f.seek(0, 0)
+            f.write("127.0.0.1       " + name + '.host\n' + content)
+
+        shutil.move(conf_path, '/etc/apache2/sites-available/' + conf_name)
+        subprocess.call(['a2ensite', conf_name])
+        # TODO : add in /etc/hosts
+        subprocess.call(['systemctl', 'reload', 'apache2'])
+
+
 manager = CommandManager()
 manager.add(CommandSaveConfig)
 manager.add(CommandInstallLamp)
 manager.add(CommandInstallConf)
+manager.add(CommandApacheCreateHost)
 
 # TODO : add ln from python3 to python and py
 
