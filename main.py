@@ -249,7 +249,6 @@ class CommandApacheCreateHost(Command):
 
         shutil.move(conf_path, '/etc/apache2/sites-available/' + conf_name)
         subprocess.call(['a2ensite', conf_name])
-        # TODO : add in /etc/hosts
         subprocess.call(['systemctl', 'reload', 'apache2'])
 
 
