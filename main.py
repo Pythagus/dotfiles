@@ -306,8 +306,30 @@ if __name__ == '__main__':
     args = sys.argv
 
     if len(args) <= 1:
-        print("No arguments")
-        # TODO : print help
+        print()
+        print("  _____        _    __ _ _           ")
+        print(" |  __ \      | |  / _(_) |          ")
+        print(" | |  | | ___ | |_| |_ _| | ___  ___ ")
+        print(" | |  | |/ _ \| __|  _| | |/ _ \/ __|")
+        print(" | |__| | (_) | |_| | | | |  __/\__ \\")
+        print(" |_____/ \___/ \__|_| |_|_|\___||___/")
+        print()
+
+        print(colorama.Fore.GREEN + "Damien Molina" + colorama.Fore.RESET + " Dotfiles")
+        print()
+
+        commands = sorted(manager.commands, key=lambda x: x.name)
+
+        print(colorama.Fore.YELLOW + "Available commands:" + colorama.Fore.RESET)
+        max_command_width = 0
+        for command in commands:
+            if max_command_width < len(command.name):
+                max_command_width = len(command.name)
+
+        for command in commands:                
+            print("   " + colorama.Fore.GREEN + command.name + colorama.Fore.RESET + " " * (max_command_width - len(command.name)) + "  " + command.description)
+
+        print()
     else:
         command_name = args[1]
         manager.execute(command_name, args[2::])
