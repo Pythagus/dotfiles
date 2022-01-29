@@ -112,7 +112,7 @@ class CommandManager(object):
         command = self.findName(name)
 
         if command is None:
-            error("ERROR : command " + name + " not found")
+            error("Command " + name + " not found")
 
         command.execute(arguments)
 
@@ -151,7 +151,7 @@ class CommandInstallLamp(Command):
 
     # Execute the command.
     def execute(self, arguments):
-        subprocess.call("./lamp/INSTALL.sh")
+        subprocess.call(["sudo", "./lamp/INSTALL.sh"])
 
 
 # Save the system configs into the Git repository.

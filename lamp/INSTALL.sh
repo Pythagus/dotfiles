@@ -37,7 +37,7 @@ conf_not_present() {
 generate_indent() {
   if [ $1 -gt 0 ] ; then
     local RANGE=`eval echo {1..$1}`
-    echo "printf '\ %.0s' $RANGE"
+    echo `printf '\ %.0s' $RANGE`
   else
     echo
   fi
@@ -88,9 +88,10 @@ fi
 ########################
 # Configure PhpMyAdmin #
 ########################
+BASE_CHECKPOINT="PHPMYADMIN_CHECKPOINT"
 CONF_FILE=/etc/phpmyadmin/config.inc.php
 CONF_FILE_SAVE=$CONF_FILE.default
-CHECKPOINT="\/\/PHPMYADMIN_CHECKPOINT"
+CHECKPOINT="//$BASE_CHECKPOINT"
 save_conf
 
 if conf_not_present ; then
@@ -100,6 +101,7 @@ if conf_not_present ; then
   add_checkpoint "\/\* Advance to next server for rest of config \*\/" "i" $INDENT
 
   # Add the configs.
+  CHECKPOINT="\/\/$BASE_CHECKPOINT"
   add_conf "\$cfg['Servers'][\$i]['auth_type']='config';" $INDENT
   add_conf "\$cfg['Servers'][\$i]['user']='root';" $INDENT
   add_conf "\$cfg['Servers'][\$i]['password']='bdd';" $INDENT
