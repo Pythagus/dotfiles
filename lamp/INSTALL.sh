@@ -134,6 +134,7 @@ fi
 
 # Restarting apache2.
 phpenmod mbstring
+a2enmod rewrite
 systemctl reload apache2
 systemctl restart apache2
 
