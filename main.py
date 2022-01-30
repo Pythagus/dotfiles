@@ -24,6 +24,7 @@ CONFIG_FILES = [
     '.config/polybar/config',
     '.config/polybar/launch.sh',
     '.config/rofi/config.rasi',
+    '.config/Code/User/settings.json',
     '.ssh/config',
 ]
 
