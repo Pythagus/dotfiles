@@ -289,7 +289,7 @@ class CommandApacheCreateHost(Command):
             f.write("127.0.0.1       " + name + '.host\n' + content)
 
         shutil.move(conf_path, '/etc/apache2/sites-available/' + conf_name)
-        subprocess.call(['a2ensite', conf_name])
+        subprocess.call('a2ensite ' + conf_name + ' > /dev/null', shell=True)
         subprocess.call(['systemctl', 'reload', 'apache2'])
 
 
