@@ -8,4 +8,6 @@ killall -q polybar
 while pgrep -u $UID -x polybar >/dev/null; do sleep 1; done
 
 # Launch bar
+pulseaudio -k 2&>/dev/null
+pulseaudio --start
 polybar default &
