@@ -45,8 +45,8 @@ def error(message, code=1):
 
 
 # Print a warning message.
-def warning(message):
-    print_color(colorama.Fore.YELLOW, "[WARNING] " + message)
+def warning(message, warn=True):
+    print_color(colorama.Fore.YELLOW, ("[WARNING] " if warn else "") + message)
 
 
 # Print an info message.
@@ -252,10 +252,15 @@ class CommandApacheCreateHost(Command):
 
     # Execute the command.
     def execute(self, arguments):
-        mustBeRoot()
+        if len(arguments) == 0:
+            warning("./dotfiles apache:host [host name] [path location]", False)
+            print()
+            exit(0)
 
         if len(arguments) != 2:
             error(self.name + " wants 2 arguments, " + str(len(arguments)) + " given")
+
+        mustBeRoot()
 
         # Check name.
         name = str(arguments[0]).lower()
