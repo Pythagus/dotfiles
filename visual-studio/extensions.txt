@@ -1,5 +1,6 @@
 abusaidm.html-snippets
 amiralizadeh9480.laravel-extra-intellisense
+austenc.laravel-blade-spacer
 bmewburn.vscode-intelephense-client
 cjhowe7.laravel-blade
 codingyu.laravel-goto-view
@@ -8,6 +9,7 @@ esbenp.prettier-vscode
 formulahendry.auto-close-tag
 formulahendry.auto-rename-tag
 IronGeek.vscode-env
+MehediDracula.php-namespace-resolver
 mohamedbenhida.laravel-intellisense
 MS-CEINTL.vscode-language-pack-fr
 ms-python.python
@@ -18,6 +20,8 @@ onecentlin.laravel5-snippets
 ritwickdey.live-sass
 ritwickdey.LiveServer
 ryannaddy.laravel-artisan
+shufo.vscode-blade-formatter
 stef-k.laravel-goto-controller
 syler.sass-indented
 Zignd.html-css-class-completion
+zobo.php-intellisense

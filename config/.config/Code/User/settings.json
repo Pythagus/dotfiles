@@ -8,5 +8,13 @@
             "extensionName": ".min.css"
         }
     ],
-    "explorer.confirmDragAndDrop": false
+    "liveSassCompile.settings.includeItems": [
+        "public/css",
+    ],
+    "explorer.confirmDragAndDrop": false,
+    "explorer.confirmDelete": false,
+    "diffEditor.ignoreTrimWhitespace": false,
+    "[blade]": {
+        "editor.defaultFormatter": "shufo.vscode-blade-formatter"
+    }
 }
