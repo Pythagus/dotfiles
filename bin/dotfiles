@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# Current file directory path.
+# Taken from https://stackoverflow.com/a/246128
+SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+
+python3 $SCRIPT_DIR/../main.py $@

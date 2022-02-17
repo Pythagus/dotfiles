@@ -98,3 +98,7 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
+
+if [ -d ~/dotfiles ] ; then
+  export PATH="$HOME/dotfiles/bin:$PATH"
+fi
