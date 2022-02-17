@@ -7,10 +7,10 @@ HISTFILESIZE=2000
 # Global bash variables.
 color_prompt=yes
 
+# Prompting a nice message.
+echo -e "\e[48;5;229m\e[30m    Salut vieux !    \e[0m"
 
-
-
-
+# Make color variables.
 txtblk='\[\e[0;30m\]' # Black - Regular
 txtred='\[\e[0;31m\]' # Red
 txtgrn='\[\e[0;32m\]' # Green
@@ -45,45 +45,35 @@ bakcyn='\[\e[46m\]'   # Cyan
 bakwht='\[\e[47m\]'   # White
 txtrst='\[\e[0m\]'    # Text Reset
 
-PROMPT_COMMAND=__prompt_command
 
 nameColor="${bldgrn}"
-# Red name for root
 if [ "${UID}" -eq "0" ]; then
+  # Red name for root
   nameColor="${bldred}"
 fi
-pathColor="${txtwht}"
 
+# Function used to prepare the
+# user prompt. This is also used
+# to refresh it when a command is
+# executed.
 __prompt_command() {
-  local exit="$?"
-  PS1=""
+  local exitCode="$?"
+  local pathColor="${txtwht}"
+  
+  PS1="\n${nameColor}┌─ \u@\h${txtrst} ${pathColor}\w${txtrst}"
 
-  #if [ $exit != 0 ]; then
-  #  PS1+="${txtred}${exit} "
-  #fi
-
-  PS1+="${nameColor}┌─ \u@\h${txtrst} ${pathColor}\w${txtrst}"
-
-  if [ $exit != 0 ]; then
-    PS1+="${bldylw} [ERR: ${exit}]${txtrst} "
+  if [ $exitCode != 0 ]; then
+    PS1+="${bldylw} [ERR: ${exitCode}]${txtrst} "
   fi
 
-  PS1+="\n${nameColor}└─>${txtrst} $ "
+  PS1+="\n${nameColor}└─▶${txtrst} $ "
 }
 
-__prompt_command
+# Set the function to be called after
+# a command is executed.
+PROMPT_COMMAND=__prompt_command
 
-
-
-
-
-
-
-
-
-
-
-
+# Load aliases if any exists.
 if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
@@ -102,3 +92,4 @@ fi
 if [ -d ~/dotfiles ] ; then
   export PATH="$HOME/dotfiles/bin:$PATH"
 fi
+
