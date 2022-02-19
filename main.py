@@ -14,6 +14,7 @@ HOME_DIRECTORY = os.path.expanduser('~')
 CONFIG_FILES = [
     '.bashrc',
     '.bash_aliases',
+    '.bash_completion',
     '.vimrc',
     '.vim/plugins.vim',
     '.config/i3/config',

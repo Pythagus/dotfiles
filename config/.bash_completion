@@ -1,0 +1,2 @@
+# Completion rules.
+complete -W 'config:save config:install apache:host install:lamp install:vscode' dotfiles
