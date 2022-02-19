@@ -18,7 +18,6 @@ CONFIG_FILES = [
     '.vim/plugins.vim',
     '.config/i3/config',
     '.config/i3/wallpaper.jpg',
-    '.config/i3/wallpaper.png',
     '.config/kitty/kitty.conf',
     '.config/kitty/theme.conf',
     '.config/compton/config',
