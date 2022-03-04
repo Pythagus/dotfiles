@@ -8,7 +8,9 @@ ecmel.vscode-html-css
 esbenp.prettier-vscode
 formulahendry.auto-close-tag
 formulahendry.auto-rename-tag
+Gruntfuggly.todo-tree
 IronGeek.vscode-env
+KevinRose.vsc-python-indent
 MehediDracula.php-namespace-resolver
 mohamedbenhida.laravel-intellisense
 MS-CEINTL.vscode-language-pack-fr
@@ -23,5 +25,7 @@ ryannaddy.laravel-artisan
 shufo.vscode-blade-formatter
 stef-k.laravel-goto-controller
 syler.sass-indented
+tht13.python
+wayou.vscode-todo-highlight
 Zignd.html-css-class-completion
 zobo.php-intellisense

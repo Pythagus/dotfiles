@@ -13,8 +13,8 @@
     ],
     "explorer.confirmDragAndDrop": false,
     "explorer.confirmDelete": false,
-    "diffEditor.ignoreTrimWhitespace": false,
     "[blade]": {
         "editor.defaultFormatter": "shufo.vscode-blade-formatter"
-    }
+    },
+    "diffEditor.ignoreTrimWhitespace": false
 }
